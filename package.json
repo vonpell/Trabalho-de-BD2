@@ -1,0 +1,16 @@
+{
+  "name": "trabalho-bd-2",
+  "version": "1.0.0",
+  "description": "\"Trabalho de Banco de Dados II\"",
+  "main": "coquinhaGelada.js",
+  "scripts": {
+    "test": "\"npm run test\"",
+    "start": "node main.js"
+  },
+  "author": "\"Afonso Pellenz\"",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "winston": "^3.13.1"
+  }
+}

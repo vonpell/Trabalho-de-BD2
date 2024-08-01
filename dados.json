@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "nome": "John Doe",
+    "departamento": "Finanças",
+    "cargo": "Analista de Finanças",
+    "salario": 3000
+  },
+  {
+    "id": 2,
+    "nome": "Jane Doe",
+    "departamento": "Recursos Humanos",
+    "cargo": "Analista de RH",
+    "salario": 3000
+  },
+  {
+    "id": 3,
+    "nome": "Lívia Doe",
+    "departamento": "Tecnologia",
+    "cargo": "Analista de TI",
+    "salario": 10000
+  },
+  {
+    "id": 4,
+    "nome": "Afonso Doe",
+    "departamento": "Tecnologia",
+    "cargo": "Analista de TI",
+    "salario": 10000
+  }
+]
