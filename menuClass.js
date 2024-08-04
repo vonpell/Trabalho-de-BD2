@@ -1,14 +1,15 @@
-import { read } from "fs";
+import Logger from "./logger/Logger.js";
 import {
   readArray,
   insertNoArray,
   updateNoArray,
-  deleteFromArray,
+  deleteDoArray,
 } from "./metodos.js";
 import readline from "readline";
 
 export default class Menu {
   constructor() {
+    this.logger = new Logger();
     this.userInterface = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
@@ -24,11 +25,12 @@ export default class Menu {
   }
 
   async handleOption(opcao) {
+    const tamanhoArray = await readArray();
+
     switch (opcao) {
       case "1":
-        let novoObjeto = {};
-        const tamanhoArray = await readArray();
-        console.log("Tamanho do array: ", tamanhoArray.length);
+        let novoObjeto = {};        
+        this.logger.info("Tamanho do array: ", tamanhoArray.length);
         this.userInterface.question(
           "Digite o nome do novo funcionário: ",
           (nome) => {
@@ -40,16 +42,14 @@ export default class Menu {
                   (cargo) => {
                     this.userInterface.question(
                       "Digite salário do novo funcionário: ",
-                      async (salario) => {
+                      (salario) => {
                         novoObjeto = {
-                          id: tamanhoArray,
+                          id: tamanhoArray++,
                           nome: nome,
                           departamento: departamento,
                           cargo: cargo,
                           salario: salario,
                         };
-                        await insertNoArray(novoObjeto);
-                        this.userInterface.close();
                       }
                     );
                   }
@@ -58,15 +58,17 @@ export default class Menu {
             );
           }
         );
+        await insertNoArray(novoObjeto);
+        tamanhoArray = await readArray();
+        this.userInterface.close();
         break;
 
-      case "2":
-        tamanhoArray = this.data.length;
+      case "2":        
         console.log("Tamanho do array:", tamanhoArray);
         this.userInterface.question(
           "Digite o índice do objeto a ser atualizado: ",
           (indice) => {
-            if (indice < 0 || indice >= tamanhoArray) {
+            if (indice <= 0 || indice > tamanhoArray) {
               console.log("Índice inválido");
               this.menu().start();
               return;
@@ -115,7 +117,7 @@ export default class Menu {
               this.start();
               return;
             }
-            deleteFromArray(indice);
+            deleteDoArray(indice);
             this.userInterface.close();
           }
         );
