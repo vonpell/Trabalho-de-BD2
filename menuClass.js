@@ -1,10 +1,10 @@
 import Logger from "./logger/Logger.js";
-import {
-  readArray,
+import {  
   insertNoArray,
   updateNoArray,
   deleteDoArray,
-} from "./metodos.js";
+} from "./metodosManipulacaoDeDados.js";
+import { readArray } from "./readAndWriteFile.js";
 import readline from "readline";
 
 export default class Menu {
@@ -25,111 +25,71 @@ export default class Menu {
   }
 
   async handleOption(opcao) {
-    const tamanhoArray = await readArray();
-
+    const arrayDeObjetos = await readArray();
+    
     switch (opcao) {
       case "1":
-        let novoObjeto = {};        
-        this.logger.info("Tamanho do array: ", tamanhoArray.length);
-        this.userInterface.question(
-          "Digite o nome do novo funcionário: ",
-          (nome) => {
-            this.userInterface.question(
-              "Digite o departamento do novo funcionário: ",
-              (departamento) => {
-                this.userInterface.question(
-                  "Digite o cargo do novo funcionário: ",
-                  (cargo) => {
-                    this.userInterface.question(
-                      "Digite salário do novo funcionário: ",
-                      (salario) => {
-                        novoObjeto = {
-                          id: tamanhoArray++,
-                          nome: nome,
-                          departamento: departamento,
-                          cargo: cargo,
-                          salario: salario,
-                        };
-                      }
-                    );
-                  }
-                );
-              }
-            );
-          }
-        );
-        await insertNoArray(novoObjeto);
-        tamanhoArray = await readArray();
-        this.userInterface.close();
-        break;
+          this.userInterface.question("Digite o nome do novo funcionário: ", (nome) => {
+            this.userInterface.question("Digite o departamento do novo funcionário: ", (departamento) => {
+              this.userInterface.question("Digite o cargo do novo funcionário: ", (cargo) => {
+                this.userInterface.question("Digite o salário do novo funcionário: ", async (salario) => {
+                  const novoObjeto = {
+                    id: arrayDeObjetos[arrayDeObjetos.length - 1].id + 1, // Gera um novo id baseado no último objeto
+                    nome,
+                    departamento,
+                    cargo,
+                    salario,
+                  };
+                  await insertNoArray(novoObjeto);
+                  this.logger.info("Processo de inserção finalizado. Retornando ao menu principal.");                  
+                  this.start();
+                });
+              });
+            });
+          });
+          break;
 
       case "2":        
-        console.log("Tamanho do array:", tamanhoArray);
-        this.userInterface.question(
-          "Digite o índice do objeto a ser atualizado: ",
-          (indice) => {
-            if (indice <= 0 || indice > tamanhoArray) {
-              console.log("Índice inválido");
-              this.menu().start();
-              return;
-            }
-            this.userInterface.question(
-              "Digite o novo nome do funcionário: ",
-              (nome) => {
-                this.userInterface.question(
-                  "Digite o novo departamento do funcionário: ",
-                  (departamento) => {
-                    this.userInterface.question(
-                      "Digite o novo cargo do funcionário: ",
-                      (cargo) => {
-                        this.userInterface.question(
-                          "Digite o novo salário do funcionário: ",
-                          (salario) => {
-                            const objetoModificado = {
-                              id: indice,
-                              nome: nome,
-                              departamento: departamento,
-                              cargo: cargo,
-                              salario: salario,
-                            };
-                            updateNoArray(indice, objetoModificado);
-                            this.userInterface.close();
-                          }
-                        );
-                      }
-                    );
-                  }
-                );
-              }
-            );
-          }
-        );
-        break;
+      this.userInterface.question("Digite o id do objeto a ser atualizado: ", async (id) => {
+        id = parseInt(id, 10);
 
-      case "3":
-        tamanhoArray = this.data.length;
-        console.log("Tamanho do array:", tamanhoArray);
-        this.userInterface.question(
-          "Digite o índice do objeto a ser deletado: ",
-          (indice) => {
-            if (indice < 0 || indice >= tamanhoArray) {
-              console.log("Índice inválido");
-              this.start();
-              return;
-            }
-            deleteDoArray(indice);
-            this.userInterface.close();
-          }
-        );
-        break;
+        this.userInterface.question("Digite o novo nome do funcionário: ", (nome) => {
+          this.userInterface.question("Digite o novo departamento do funcionário: ", (departamento) => {
+            this.userInterface.question("Digite o novo cargo do funcionário: ", (cargo) => {
+              this.userInterface.question("Digite o novo salário do funcionário: ", async (salario) => {
+                const objetoModificado = {
+                  id: id, // Mantém o id original
+                  nome,
+                  departamento,
+                  cargo,
+                  salario,
+                };
+                await updateNoArray(id, objetoModificado);
+                this.logger.info("Processo de update finalizado. Retornando ao menu principal.");
+                this.start();
+              });
+            });
+          });
+        });
+      });
+
+      case "3": 
+      this.userInterface.question("Digite o id do objeto a ser removido: ", async (id) => {
+        id = parseInt(id, 10);   
+
+        await deleteDoArray(id);
+        this.logger.info("Processo de remoção finalizado. Retornando ao menu principal.");
+        this.start();
+      });
+      break;
 
       case "4":
-        const arrayDeObjetos = this.data;
-        console.log("Objetos no array:");
+        console.log("Objetos no array: ");
         arrayDeObjetos.forEach((objeto) => {
           console.log(objeto);
         });
-        this.userInterface.close();
+        this.logger.info("Todos os itens foram impressos. Retornando ao menu principal.");
+        this.start();
         break;
 
       case "5":
@@ -144,7 +104,7 @@ export default class Menu {
 
   start() {
     this.displayOptions();
-    this.userInterface.question("Escolha uma opção: ", (opcao) => {
+    this.userInterface.question("Escolha uma opção: ", (opcao) => {      
       this.handleOption(opcao);
     });
   }

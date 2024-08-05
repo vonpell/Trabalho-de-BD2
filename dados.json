@@ -24,7 +24,49 @@
     "id": 4,
     "nome": "Afonso Doe",
     "departamento": "Tecnologia",
-    "cargo": "Analista de TI",
+    "cargo": "Desenvolvedor Fullstack",
     "salario": 10000
-  }
+  },
+  {
+    "id": 5,
+    "nome": "Maria Doe",
+    "departamento": "Tecnologia",
+    "cargo": "Desenvolvedor Frontend",
+    "salario": 8000
+  },
+  {
+    "id": 6,
+    "nome": "José Doe",
+    "departamento": "Tecnologia",
+    "cargo": "Desenvolvedor Backend",
+    "salario": 8000
+  },
+  {
+    "id": 7,
+    "nome": "João Doe",
+    "departamento": "RH",
+    "cargo": "Psicólogo",
+    "salario": 8000
+  },
+  {
+    "id": 8,
+    "nome": "Ana Doe",
+    "departamento": "Vendas",
+    "cargo": "Analista de Vendas",
+    "salario": 10000
+  },
+  {
+    "id": 9,
+    "nome": "Mariana Doe",
+    "departamento": "Vendas",
+    "cargo": "Analista de Vendas",
+    "salario": 10000
+  },
+  {
+    "id": 10,
+    "nome": "Lucas Doe",
+    "departamento": "RH",
+    "cargo": "Recrutador",
+    "salario": 10000
+  }  
 ]
