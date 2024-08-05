@@ -28,8 +28,7 @@ export const insertNoArray = async (novoObjeto) => {
     //   throw new Error("Erro teste redo!");
     // }
 
-    transaction.commit(true);
-    logger.info(transaction.isCommit);
+    transaction.commit(true);    
 
     // Simula um erro para testar a funcionalidade de redo no insert
     // if (isRetry === 0) {
@@ -77,8 +76,7 @@ export const updateNoArray = async (id, objetoModificado) => {
     //   throw new Error("Erro teste redo!");
     // }
 
-    transaction.commit(true);
-    logger.info(transaction.isCommit);
+    transaction.commit(true);    
 
     // Simula um erro para testar a funcionalidade de redo no update
     // if (isRetry === 0) {
@@ -122,8 +120,7 @@ export const deleteDoArray = async (id) => {
     //   throw new Error("Erro teste redo!");
     // }
 
-    transaction.commit(true);
-    logger.info(transaction.isCommit);
+    transaction.commit(true);    
 
     // Simula um erro para testar a funcionalidade de redo no delete
     // if (isRetry === 0) {
