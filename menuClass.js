@@ -17,6 +17,7 @@ export default class Menu {
   }
 
   displayOptions() {
+    console.log("--------------------------------------");
     console.log("1 - Inserir novo objeto no array");
     console.log("2 - Atualizar objeto no array");
     console.log("3 - Deletar item do array");
